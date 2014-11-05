@@ -5,8 +5,8 @@ class CreateUsersTable < ActiveRecord::Migration
       t.string :password_hash
       t.string :avatar
       t.string :age
-      t.string :hangman_score
-      t.string :ttt_score
+      t.integer :hangman_score, default: 0
+      t.integer :ttt_score, default: 0
       t.timestamps
     end
   end

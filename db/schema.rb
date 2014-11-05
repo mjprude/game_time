@@ -17,12 +17,12 @@ ActiveRecord::Schema.define(version: 20141105190111) do
   enable_extension "plpgsql"
 
   create_table "users", force: true do |t|
-    t.string   "username",      null: false
+    t.string   "username",                  null: false
     t.string   "password_hash"
     t.string   "avatar"
     t.string   "age"
-    t.string   "hangman_score"
-    t.string   "ttt_score"
+    t.integer  "hangman_score", default: 0
+    t.integer  "ttt_score",     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
