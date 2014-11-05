@@ -1,5 +1,5 @@
 module Sinatra
-  module LinkHelpers
+  module LinkHelper
 
     def link_to(url_or_record, body, css_class=nil)
       return "<a class=#{css_class}, href='#{url_or_record}'>#{body}</a>" if url_or_record.is_a? String
@@ -26,5 +26,5 @@ module Sinatra
     end
 
   end
-  helpers LinkHelpers
+  helpers LinkHelper
 end
