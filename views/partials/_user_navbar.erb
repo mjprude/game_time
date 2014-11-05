@@ -1,0 +1,14 @@
+<div class="buttons">
+  <form action="/users/<%= current_user.id %>" class="navbar">
+    <input type="submit" value="my stats">
+  </form>
+
+  <form action="/sessions" method="post" class="navbar">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="logout">
+  </form>
+
+  <form action="/console" class="navbar">
+    <input type="submit" value="debug">
+  </form>
+</div>

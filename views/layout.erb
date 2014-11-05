@@ -9,6 +9,15 @@
   <script src='/scripts/scripts.js'></script>
 </head>
 <body>
+
+  <div class="navbar">
+    <% if session[:current_user] %>
+      <%= erb :'/partials/_user_navbar' %>
+    <% else %>
+      <%= erb :'/partials/_public_navbar' %>
+    <% end %>
+  </div>
+
   <%= yield %>
 </body>
 </html>

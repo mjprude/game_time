@@ -1,0 +1,19 @@
+<h3>Update your account info</h3>
+
+<form id='edit-user' action="/users/<%= @user.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <h4>Change your username...</h4>
+  <input type="text" name="user[username]" value=<%= @user.username %>>
+  <h4>Happy birthday! Change your age...</h4>
+  <input type="text" name="user[age]" value=<%= @user.age %>>
+  <h4>Change your password...</h4>
+  <input type="password" name="password" placeholder="...password">
+  <input type="password" name="password_verification" placeholder="...confirm new password">
+  <input type="submit">
+</form>
+
+<h3>Delete Your account</h3>
+<form action="/users/<%= @user.id %>" method="post" id="delete-user">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="go bye bye?">
+</form>
