@@ -15,7 +15,6 @@ class ApplicationController < Sinatra::Base
 
   # ******** routes *********
   get '/' do
-    @recent_entries = recent_entries
     erb :index
   end
 

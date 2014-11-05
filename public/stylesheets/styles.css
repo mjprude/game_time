@@ -1,3 +1,8 @@
 body {
   background-color: #7751f8;
 }
+
+input {
+  display: block;
+  margin: 1em;
+}
