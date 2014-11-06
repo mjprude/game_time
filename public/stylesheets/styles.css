@@ -2,26 +2,50 @@ body {
   background-color: #7751f8;
 }
 
-div.navbar {
+div.container {
   width: 100%;
+}
+
+div.navbar {
+  width: 20em;
+  margin: 0 auto;
+}
+
+div.stats {
+  position: fixed;
+  right: 1em;
 }
 
 form.navbar {
   display: inline-block;
 }
 
-div.buttons {
-  margin: 0 auto;
-}
-
-.letterbank {
-  display: inline-block;
+div.man {
+  width: 60%;
+  height: 10em;
 }
 
 #game_state {
-  margin: 1em;
-  font-size: 2em;
-  letter-spacing: 5pt;
+  margin: 1em auto;
+  font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
+  font-weight: bold;
+  width: 80%;
+  text-align: center;
+  font-size: 4em;
+  letter-spacing: .4em;
+}
+
+.letters {
+  width: 39em;
+  text-align: center;
+  margin: 0 auto;
+}
+.letterbank {
+  display: inline-block;
+  font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
+  font-weight: bold;
+  font-size: 2.5em;
+  margin: .1em;
 }
 
 input {

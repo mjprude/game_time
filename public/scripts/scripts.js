@@ -8,21 +8,19 @@ function disableButtons(string){
 }
 
 function parseServerData(data){
-  if (data.victory){
-    victory();
-    return;
-  }
-  if (data.fail_count === 6){
-    failure();
-    return;
-  }
-  
   disableButtons(data.bad_guesses)
   disableButtons(data.game_state)
   
   $('#game_state').empty().append(data.game_state)
   console.log("game state:", data.game_state)
   console.log('bad guesses:', data.bad_guesses)
+
+  if (data.victory){
+    return victory();
+  }
+  if (data.fail_count === 6){
+    return failure();
+  }
 }
 
 function victory() {
