@@ -2,7 +2,7 @@ function disableButtons(string){
   var letterArray = string.match(/[A-Z]/g)
   if (letterArray){
     letterArray.forEach(function(guess){
-      $("#" + guess).prop('disabled', true);
+      $(".letterbank:contains('"+ guess + "')").prop('disabled', true);
     });
   }
 }
@@ -44,8 +44,10 @@ function endGame(result) {
   });
 }
 
-function playAgain(){
-  debugger;
+function playAgain(data){
+  wiki = 'http://en.wikipedia.org/wiki/' + data.word.split(', ')[0].replace(' ', '_')
+  $('body').append('The location was ' + data.word)
+  $('body').append('<a href="' + wiki.toLowerCase() + '">Learn More!</a>')
   $('body').append('<button id="play_again">Play Again</button>');
   $('#play_again').click(function(){
     location.reload();
@@ -77,10 +79,24 @@ function makeGuess(guess){
   });
 }
 
+
+function getChar(event) {
+  return String.fromCharCode(event.keyCode || event.charCode).toUpperCase();
+}
+
+function allowTyping() {
+  $('body').keypress(function(e){
+    var buttonID = '#' + getChar(e)
+    $(buttonID).click();
+  });
+}
+
+
 // // // document ready \\ \\ \\
 $(function(){
 
   getState();
   clickGuess();
+  allowTyping();
 
 });

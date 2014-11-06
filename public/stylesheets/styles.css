@@ -18,6 +18,12 @@ div.buttons {
   display: inline-block;
 }
 
+#game_state {
+  margin: 1em;
+  font-size: 2em;
+  letter-spacing: 5pt;
+}
+
 input {
   display: block;
   margin: 1em;
