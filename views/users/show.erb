@@ -3,11 +3,13 @@
 <h2>High scores:</h2>
 <div class="high_score">
   <h3>Hangman:</h3>
-  <h3 class="score"><%= @user.hangman_score %></h3>
+  <h3 class="wins"><%= @user.hangman_wins %></h3>
+  <h3 class="losses"><%= @user.hangman_losses %></h3>
 </div>
 <div class="high_score">
   <h3>Tic Tac Toe:</h3>
-  <h3 class="score"><%= @user.ttt_score %></h3>
+  <h3 class="wins"><%= @user.ttt_wins %></h3>
+  <h3 class="wins"><%= @user.ttt_losses %></h3>
 </div>
 
 <form action="/users/<%= @user.id %>/edit" class="link">

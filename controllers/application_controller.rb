@@ -20,14 +20,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/hangman' do
-    game = current_user.hangmen[0]
-    game ||= Hangman.create(user: current_user)
-
-
-  end
-
-  get '/hangman/:guess' do
-
+    erb :hangman
   end
 
   get '/console' do

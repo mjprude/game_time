@@ -3,8 +3,8 @@ module Sinatra
 
     def letterbank
       string = ""
-      (A..Z).each do |letter|
-        string << "<div id='#{letter}' class='letterbank'>#{letter}</div>"
+      ('A'..'Z').each do |letter|
+        string << "<button id='#{letter}' class='letterbank'>#{letter}</button>"
       end
       string
     end

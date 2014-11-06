@@ -14,6 +14,10 @@ div.buttons {
   margin: 0 auto;
 }
 
+.letterbank {
+  display: inline-block;
+}
+
 input {
   display: block;
   margin: 1em;

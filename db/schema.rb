@@ -27,12 +27,14 @@ ActiveRecord::Schema.define(version: 20141105212310) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "username",                  null: false
+    t.string   "username",                   null: false
     t.string   "password_hash"
     t.string   "avatar"
     t.string   "age"
-    t.integer  "hangman_score", default: 0
-    t.integer  "ttt_score",     default: 0
+    t.integer  "hangman_wins",   default: 0
+    t.integer  "hangman_losses", default: 0
+    t.integer  "ttt_wins",       default: 0
+    t.integer  "ttt_losses",     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
