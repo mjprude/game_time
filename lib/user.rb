@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :hangmen
   validates :username, uniqueness: true
   include BCrypt
   def password

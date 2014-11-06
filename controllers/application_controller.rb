@@ -1,6 +1,7 @@
 class ApplicationController < Sinatra::Base
   helpers Sinatra::AuthenticationHelper
   helpers Sinatra::LinkHelper
+  helpers Sinatra::LetterHelper
 
   before do
     @connection = ActiveRecord::Base.establish_connection({adapter: 'postgresql', database: 'games_db'})
@@ -16,6 +17,17 @@ class ApplicationController < Sinatra::Base
   # ******** routes *********
   get '/' do
     erb :index
+  end
+
+  get '/hangman' do
+    game = current_user.hangmen[0]
+    game ||= Hangman.create(user: current_user)
+
+
+  end
+
+  get '/hangman/:guess' do
+
   end
 
   get '/console' do
