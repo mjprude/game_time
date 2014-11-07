@@ -12,6 +12,7 @@ function disableButtons(string, bad_guess){
     letterArray.forEach(function(guess){
       var button = $(".letterbank:contains('"+ guess + "')")
       button.prop('disabled', true);
+      button.off();
       if (bad_guess) {
         button.css("background-color", "#e37980")
       }
@@ -20,11 +21,14 @@ function disableButtons(string, bad_guess){
 }
 
 function parseServerData(data){
-  var lat = parseFloat(data.latlng.split(', ')[0]);
-  var lng = parseFloat(data.latlng.split(', ')[1]);
-  var zoom = 1 + data.fail_count
+  var lat = 0
+  var lng = 0
+  if (data.fail_count > 0) {
+    lat = parseFloat(data.latlng.split(', ')[0]);
+    lng = parseFloat(data.latlng.split(', ')[1]);
+  }
+  var zoom = 0 + data.fail_count
   var guesses_left = 6 - data.fail_count
-
   disableButtons(data.bad_guesses, true)
   disableButtons(data.game_state, false)
 
@@ -34,25 +38,46 @@ function parseServerData(data){
   }
   
   $('#game_state').empty().append(data.game_state)
-  console.log("game state:", data.game_state)
-  console.log('bad guesses:', data.bad_guesses)
+  console.log("game state:", data.game_state);
+  console.log('bad guesses:', data.bad_guesses);
 
-  if (data.victory || data.fail_count === 6){
-    var mapOptions = {
-      zoom: 7,
-      center: new google.maps.LatLng(lat, lng),
-      mapTypeId: google.maps.MapTypeId.HYBRID,
-    };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);    
-  }
   if (data.victory) {
-    return victory();
+    endMap(lat, lng);
+    endGame(true);
+    return;
   }
-  if (data.fail_count === 6){   
-    return failure();
+  if (data.fail_count === 6){
+    endMap(lat, lng);
+    endGame(false);
+    return;
   }
 
+  newMap(zoom, lat, lng); 
+}
+
+function victory() {
+  $('#end_game').empty().append('<h2>Great Job! You win!</h2>')
+}
+function failure() {
+  $('#end_game').empty().append('<h2>Too bad! Try again?</h2>')
+}
+
+function endGame(result) {
+  if (result) {
+    victory();
+} else {
+    failure();
+  }
+  $.ajax({
+    method: 'POST',
+    url: '/api/hangman',
+    dataType: 'JSON',
+    data: {user_won: result},
+    success: playAgain
+  });
+}
+
+function newMap(zoom, lat, lng) {
   var mapOptions = {
     zoom: zoom,
     center: new google.maps.LatLng(lat, lng),
@@ -63,32 +88,23 @@ function parseServerData(data){
       mapOptions);
 }
 
-function victory() {
-  $('#end_game').append('<h2>Great Job! You win!</h2>')
-  endGame('true')
-}
-function failure() {
-  $('#end_game').append('<h2>Too bad! Try again?</h2>')
-  endGame('false')
-}
-
-function endGame(result) {
-  $.ajax({
-    method: 'POST',
-    url: '/api/hangman',
-    dataType: 'JSON',
-    data: {user_won: result},
-    success: playAgain
-  });
+function endMap(lat, lng) {
+  debugger;
+  var mapOptions = {
+      zoom: 7,
+      center: new google.maps.LatLng(lat, lng),
+      mapTypeId: google.maps.MapTypeId.HYBRID,
+    };
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions); 
 }
 
 function playAgain(data){
   var locale = data.word.capitalize()
   var wiki = 'http://en.wikipedia.org/wiki/' + locale.split(', ')[0].replace(' ', '_')
-
-  // var frame = '<object data=' + wiki + ' width="600" height="400"> <embed src=' + wiki.toLowerCase() + ' width="600" height="400"> </embed> Error: Embedded data could not be displayed. </object>'
   $('#end_game').append('<button id="play_again">Play Again</button>');
-  $('#end_game').append('<a href="' + wiki + '" id="learn_more">Learn More About ' + locale + '!</a>')
+  $('#end_game').append('<a href="' + wiki + '" target="_blank" id="learn_more">Learn More About ' + locale + '!</a>')
+  $('button.letterbank').off();
   $('#play_again').click(function(){
     location.reload();
   });
@@ -119,7 +135,6 @@ function makeGuess(guess){
   });
 }
 
-
 function getChar(event) {
   return String.fromCharCode(event.keyCode || event.charCode).toUpperCase();
 }
@@ -132,12 +147,3 @@ function allowTyping() {
 }
 
 
-
-// // // document ready \\ \\ \\
-$(function(){
-
-  getState();
-  clickGuess();
-  allowTyping();
-
-});

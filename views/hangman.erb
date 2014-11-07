@@ -7,7 +7,9 @@
   <h3>Guesses Left:</h3>
   <div id="guesses_left"></div>
 </div>
-<div id="end_game"></div>
+<div id="end_game">
+  <h3>Guess a Capital and Country!</h3>
+</div>
 <div id="map-canvas" class="man">
 </div>
 
@@ -17,3 +19,14 @@
   <%= letterbank %>
 </div>
 
+
+<script>
+// // // document ready \\ \\ \\
+$(function(){
+
+  getState();
+  clickGuess();
+  allowTyping();
+
+});
+</script>
