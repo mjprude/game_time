@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
       redirect '/login/failed'
     elsif user.password == params[:password]
       session[:current_user] = user.id
-      redirect "/users/#{user.id}"
+      redirect "/hangman"
     else
       redirect '/login/failed'
     end

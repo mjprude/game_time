@@ -20,6 +20,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/hangman' do
+    authenticate!
     erb :hangman
   end
 
