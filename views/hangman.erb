@@ -3,11 +3,13 @@
   <h3>Wins: <%= current_user.hangman_wins %></h3>
   <h3>Lossess: <%= current_user.hangman_losses %></h3>
 </div>
-<div id="guesses_left">
+<div class="guesses_left">
+  <h3>Guesses Left:</h3>
+  <div id="guesses_left"></div>
 </div>
-<div id="map-canvas" class="man"></div>
-
 <div id="end_game"></div>
+<div id="map-canvas" class="man">
+</div>
 
 <div id="game_state"></div>
 

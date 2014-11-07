@@ -16,27 +16,61 @@ div.stats {
   right: 1em;
 }
 
+.guesses_left {
+  position: fixed;
+  left: 1em;
+  width: 5em;
+}
+
+#guesses_left {
+  font-size: 4em;
+  font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
+  font-weight: bold;
+  width: 95%;
+  text-align: center;
+  margin: 0 auto;
+}
+
 form.navbar {
   display: inline-block;
 }
-/*
-div.man {
-  width: 60%;
-  height: 10em;
-}*/
+
+
+
 #map-canvas {
   width: 60%;
   height: 15em;
   margin: 0 auto;
 }
 
+#end_game {
+  z-index: 1;
+  text-align: center;
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+}
+
+#learn_more {
+  font-size: 2em;
+  color: white;
+}
+
+#play_again {
+  background-color: white;
+  border: none;
+  font-size: 1.5em;
+  display: block;
+  margin: 0 auto;
+}
+
 #game_state {
-  margin: 1em auto;
+  margin: 0.3em auto 1em auto;
   font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
   font-weight: bold;
   width: 95%;
   text-align: center;
-  font-size: 3.5em;
+  font-size: 3em;
   letter-spacing: .4em;
 }
 

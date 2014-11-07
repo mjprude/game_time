@@ -1,8 +1,20 @@
-function disableButtons(string){
+String.prototype.capitalize = function() {
+  var ary = this.split(' ')
+  ary.forEach(function(word, idx){
+    ary[idx] = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  });
+  return ary.join(' ')
+}
+
+function disableButtons(string, bad_guess){
   var letterArray = string.match(/[A-Z]/g)
   if (letterArray){
     letterArray.forEach(function(guess){
-      $(".letterbank:contains('"+ guess + "')").prop('disabled', true);
+      var button = $(".letterbank:contains('"+ guess + "')")
+      button.prop('disabled', true);
+      if (bad_guess) {
+        button.css("background-color", "#e37980")
+      }
     });
   }
 }
@@ -13,8 +25,8 @@ function parseServerData(data){
   var zoom = 1 + data.fail_count
   var guesses_left = 6 - data.fail_count
 
-  disableButtons(data.bad_guesses)
-  disableButtons(data.game_state)
+  disableButtons(data.bad_guesses, true)
+  disableButtons(data.game_state, false)
 
   $('#guesses_left').empty().append(guesses_left)
   if (guesses_left < 3) {
@@ -25,26 +37,19 @@ function parseServerData(data){
   console.log("game state:", data.game_state)
   console.log('bad guesses:', data.bad_guesses)
 
-  if (data.victory){
+  if (data.victory || data.fail_count === 6){
     var mapOptions = {
-      zoom: 8,
+      zoom: 7,
       center: new google.maps.LatLng(lat, lng),
       mapTypeId: google.maps.MapTypeId.HYBRID,
-      disableDefaultUI: true
     };
     var map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);    
+  }
+  if (data.victory) {
     return victory();
   }
-  if (data.fail_count === 6){
-    var mapOptions = {
-      zoom: 8,
-      center: new google.maps.LatLng(lat, lng),
-      mapTypeId: google.maps.MapTypeId.HYBRID,
-      disableDefaultUI: true
-    };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);    
+  if (data.fail_count === 6){   
     return failure();
   }
 
@@ -78,10 +83,12 @@ function endGame(result) {
 }
 
 function playAgain(data){
-  wiki = 'http://en.wikipedia.org/wiki/' + data.word.split(', ')[0].replace(' ', '_')
-  $('#end_game').append('The location was ' + data.word)
-  $('#end_game').append('<a href="' + wiki.toLowerCase() + '">Learn More!</a>')
+  var locale = data.word.capitalize()
+  var wiki = 'http://en.wikipedia.org/wiki/' + locale.split(', ')[0].replace(' ', '_')
+
+  // var frame = '<object data=' + wiki + ' width="600" height="400"> <embed src=' + wiki.toLowerCase() + ' width="600" height="400"> </embed> Error: Embedded data could not be displayed. </object>'
   $('#end_game').append('<button id="play_again">Play Again</button>');
+  $('#end_game').append('<a href="' + wiki + '" id="learn_more">Learn More About ' + locale + '!</a>')
   $('#play_again').click(function(){
     location.reload();
   });
