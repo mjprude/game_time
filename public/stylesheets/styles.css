@@ -19,19 +19,24 @@ div.stats {
 form.navbar {
   display: inline-block;
 }
-
+/*
 div.man {
   width: 60%;
   height: 10em;
+}*/
+#map-canvas {
+  width: 60%;
+  height: 15em;
+  margin: 0 auto;
 }
 
 #game_state {
   margin: 1em auto;
   font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
   font-weight: bold;
-  width: 80%;
+  width: 95%;
   text-align: center;
-  font-size: 4em;
+  font-size: 3.5em;
   letter-spacing: .4em;
 }
 

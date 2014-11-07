@@ -2,18 +2,23 @@ class Hangman < ActiveRecord::Base
   belongs_to :user
 
   before_create do
-    self.word = random_word
+    self.pull_data
     self.game_state = self.word.gsub(/\w/, '_')
   end
 
-  def random_word
-    # ['MONKEY', 'LEMUR', 'BABOON', 'ORANGUTAN', 'CHIMP', 'SPIDER MONKEY', 'THREE-TOED SLOTH'].sample
+  def random_word(hash)
+    self.word = hash.keys.sample
+    self.latlng = hash[self.word]
+  end
+
+  def pull_data
     countries = HTTParty.get('http://restcountries.eu/rest/v1/all')
-    words = []
+    words = {}
     countries.each do |hash|
-      words << "#{hash['capital'].parameterize.upcase.gsub('-', ' ')}, #{hash['name'].parameterize.upcase.gsub('-', ' ')}"
+      cap_name = "#{hash['capital'].parameterize.upcase.gsub('-', ' ')}, #{hash['name'].parameterize.upcase.gsub('-', ' ')}"
+      words[cap_name] = hash['latlng'].join(', ')
     end
-    words.sample
+    random_word(words)
   end
 
   def guess(letter)
@@ -42,7 +47,7 @@ class Hangman < ActiveRecord::Base
   end
 
   def data
-    {bad_guesses: self.bad_guesses, game_state: self.game_state, victory: victory, fail_count: fail_count, category: self.category}.to_json
+    {bad_guesses: self.bad_guesses, game_state: self.game_state, victory: victory, fail_count: fail_count, latlng: self.latlng}.to_json
   end
 
 end

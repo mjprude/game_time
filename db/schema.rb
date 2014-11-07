@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20141105212310) do
 
   create_table "hangmen", force: true do |t|
     t.string   "word"
-    t.string   "category"
+    t.string   "latlng"
     t.string   "game_state"
     t.string   "bad_guesses", default: ""
     t.integer  "user_id"
