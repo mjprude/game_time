@@ -88,7 +88,6 @@ function newMap(zoom, lat, lng) {
 }
 
 function endMap(lat, lng) {
-  debugger;
   var mapOptions = {
       zoom: 8,
       center: new google.maps.LatLng(lat, lng),
