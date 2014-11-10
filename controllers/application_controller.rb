@@ -30,6 +30,12 @@ class ApplicationController < Sinatra::Base
     erb :lobby
   end
 
+  get '/tictactoe/opengames' do
+    authenticate!
+    @games = current_user.ttts.where(game_over: false)
+    erb :'ttt/opengames'
+  end
+
   get '/tictactoe/:id' do
     authenticate!
     ttt = Ttt.find(params[:id])
