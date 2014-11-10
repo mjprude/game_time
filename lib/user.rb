@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   has_many :hangmen
+  has_many :ttt_games
+  has_many :ttts, through: :ttt_games
   validates :username, uniqueness: true
   include BCrypt
   def password

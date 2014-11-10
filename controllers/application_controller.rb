@@ -23,6 +23,19 @@ class ApplicationController < Sinatra::Base
     erb :hangman
   end
 
+  get '/tictactoe' do
+    @users = User.where.not(id: current_user)
+    erb :lobby
+  end
+
+  get '/tictactoe/:id' do
+    ttt = Ttt.find(params[:id])
+    @my_sym = ttt.ttt_games.find_by(user: current_user).user_sym
+    @their_sym = @my_sym == "X" ? "O" : "X"
+    @last_play = ttt.updated_at
+    erb :tictactoe
+  end
+
   get '/console' do
     binding.pry
   end

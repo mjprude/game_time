@@ -1,0 +1,9 @@
+<h2>Pick your opponent!</h2>
+
+<% @users.each do |user| %>
+  <form class="lobby" action="/api/ttt/new" method="post">
+    Play as 'X'<input type="radio" name="sym" value="X">
+    Play as 'O'<input type="radio" name="sym" value="O">
+    <input type="submit" name="user2" value=<%= user.username %>>
+  </form>
+<% end %>

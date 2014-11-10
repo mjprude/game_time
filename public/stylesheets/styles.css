@@ -35,7 +35,14 @@ form.navbar {
   display: inline-block;
 }
 
-
+.tttboard {
+  width: 500px;
+  margin: 0 auto;
+}
+canvas {
+  background-color: white;
+  margin: 2em auto;
+}
 
 #map-canvas {
   width: 60%;
