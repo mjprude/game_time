@@ -12,6 +12,9 @@ class Ttt < ActiveRecord::Base
       elsif line == ["O","O","O"]
         self.update(game_over: true)
         return "O"
+      elsif !game_state.include?(' ')
+        self.update(game_over: true)
+        return "TIE"
       end
     end
   end
