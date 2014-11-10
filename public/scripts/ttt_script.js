@@ -1,11 +1,11 @@
 console.log('<^+_+^>')
 var $canvas = $('#board');
-var context = $canvas[0].getContext('2d');
+var context = $('#board')[0].getContext('2d');
 var gameState = gameState || '         ';
 var userSym = $('#userSym').text();
 var currentSym;
 var blockSize = 100;
-var gameID = document.URL.split('/')[4]
+var gameID = document.URL.split('/')[4];
 
 // function makeBoard(){
 //   var board = new Array(3);
@@ -13,15 +13,15 @@ var gameID = document.URL.split('/')[4]
 //     board[i] = new Array(3);
 //   }
 //   return board;
-// }
-
-$canvas.click(clickBoard); 
+// } 
 
 function getTTTData(){
   $.ajax({
+    method: 'GET',
     url: '/api/ttt/' + gameID,
     dataType: 'JSON',
-    success: parseTTTData
+    data: {game_state: gameState},
+    success: parseTTTData    
   });
 }
 
@@ -36,18 +36,23 @@ function patchTTTData(){
 }
 
 function parseTTTData(data){
-  debugger;
   gameState = data.game_state;
-  currentSym = data.sym
+  currentSym = data.turn;
   if (data.winner) {
     newGame(data.winner)
+    // $canvas.on('click', disallowClick);
     $canvas.off();
   }
-  if (userSym === data.sym){
-    $canvas.on();
+  if (userSym === currentSym){
+    // debugger;
+    $canvas.off();
+    $canvas.on('click', clickBoard);
   } else {
+    // debugger;
+    // $canvas.on('click', disallowClick);
     $canvas.off();
   }
+  drawBoard();
 }
 
 function clickBoard(e){
@@ -57,7 +62,11 @@ function clickBoard(e){
   var row = Math.floor(y/blockSize);
   var i = (row * 3 + col)
   gameState = gameState.substr(0, i) + currentSym + gameState.substr(i + 1);
-  drawBoard();
+  patchTTTData();
+}
+
+function disallowClick(e) {
+  alert("It's not your turn!")
 }
 
 function drawHashes(){
@@ -94,12 +103,13 @@ function drawBoard() {
 }
 
 function newGame(winner) {
-  $('body').append(winner + 'is the winner!')
+  debugger;
+  $canvas.append(winner + 'is the winner!')
+  document.off();
 }
 
-
-setInterval(function(){ getTTTData(); }, 30000);
 $(function(){
-  drawHashes();
+  // $canvas.on('click', clickBoard);
   getTTTData();
+  setInterval(getTTTData, 3000);
 })

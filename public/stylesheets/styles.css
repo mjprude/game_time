@@ -7,47 +7,66 @@ div.container {
 }
 
 div.navbar {
-  width: 20em;
+  width: 40em;
   margin: 0 auto;
 }
 
 div.stats {
   position: fixed;
-  right: 1em;
+  right: 3em;
+  bottom: 1em;
+  background-color: rgba(255,255,255,.5);
 }
 
 .guesses_left {
   position: fixed;
-  left: 1em;
-  width: 5em;
+  left: 4em;
+  bottom: 1em;
+  width: 8em;
+  background-color: rgba(255,255,255,.5);
 }
 
 #guesses_left {
-  font-size: 4em;
+  font-size: 6em;
   font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
   font-weight: bold;
   width: 95%;
   text-align: center;
-  margin: 0 auto;
+  margin: 0 auto -.4em auto;
 }
 
 form.navbar {
   display: inline-block;
 }
 
+.player1 {
+  float: left;
+  margin-left: 50px;
+}
+
+.player2 {
+  float: right;
+  margin-right: 50px;
+}
 .tttboard {
-  width: 500px;
+  width: 300px;
   margin: 0 auto;
 }
-canvas {
+#board {
   background-color: white;
   margin: 2em auto;
 }
 
 #map-canvas {
-  width: 60%;
-  height: 15em;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /*width: 60%;*/
+  /*height: 15em;*/
+  /*margin: 0 auto;*/
 }
 
 #end_game {
@@ -56,6 +75,14 @@ canvas {
   width: 80%;
   display: block;
   margin: 0 auto;
+  color: white;
+  background-color: rgba(0,0,0,.5);
+}
+
+#end_game h3 {
+  width: 15em;
+  margin: 0 auto;
+  background-color: rgba(255,255,255,.5);
 }
 
 #learn_more {
@@ -72,19 +99,27 @@ canvas {
 }
 
 #game_state {
-  margin: 0.3em auto 1em auto;
   font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
   font-weight: bold;
-  width: 95%;
   text-align: center;
   font-size: 3em;
   letter-spacing: .4em;
+  color: white;
+  position: absolute;
+  width: 25em;
+  bottom: 2.8em;
+  left: 50%;
+  margin-left: -12.5em;
 }
 
 .letters {
-  width: 39em;
+  background-color: rgba(255,255,255,.5);
+  width: 40em;
   text-align: center;
-  margin: 0 auto;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -20em;
 }
 .letterbank {
   display: inline-block;

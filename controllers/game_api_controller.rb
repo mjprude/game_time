@@ -32,47 +32,18 @@ class GameAPIController < ApplicationController
     second = false
     if params[:sym] == "X" || params[:sym] == nil
       first = true
-      next_sym = "O"
+      first_sym = "X"
+      second_sym = "O"
     else
       second = true
-      next_sym = "X"
+      first_sym = "O"
+      second_sym = "X"
     end
 
-    TttGame.create(user: current_user, user_sym: params[:sym], ttt: game, turn: first)
-    next_sym = params[:sym] == "X" ? "O" : "X"
+    TttGame.create(user: current_user, user_sym: first_sym, ttt: game, turn: first)
     user2 = User.find_by(username: params[:user2])
-    TttGame.create(user: user2, user_sym: next_sym, ttt: game, turn: second)
+    TttGame.create(user: user2, user_sym: second_sym, ttt: game, turn: second)
     redirect "/tictactoe/#{game.id}"
-  end
-
-  patch '/ttt/:id' do
-    content_type :json
-    ajaxHash = {}
-    game = Ttt.find(params[:id])
-    if game.game_state != params[:game_state]
-      binding.pry
-      game.make_move
-      game.update(game_state: params[:game_state])
-      game.save!
-    end
-    winning_sym = game.make_move
-    if game.game_over
-      win_game = game.ttt_games.find_by(user_sym: winning_sym)
-      win_user = User.find(win_game.user_id)
-      win_user.ttt_wins += 1
-      win_user.save!
-      win_game.delete
-      lose_game = game.ttt_games.first
-      loser = User.find(lose_game.user_id)
-      loser.ttt_losses += 1
-      loser.save!
-      lose_game.delete
-      ajaxHash[:winner] = win_user.username
-    end
-    ajaxHash[:game_state] = game.game_state
-    game.swap_players
-    ajaxHash[:turn] = game.current_player.user_sym
-    ajaxHash.to_json
   end
 
   get '/ttt/:id' do
@@ -80,8 +51,43 @@ class GameAPIController < ApplicationController
     ajaxHash = {}
     game = Ttt.find(params[:id])
     ajaxHash[:game_state] = game.game_state
-    ajaxHash[:winner] = win_user.username if game.game_over
-    ajaxHash[:turn] = game.current_player.user_sym
+    # win_game = game.ttt_games.find_by(user_sym: winning_sym)
+    # win_user = User.find(win_game.user_id)
+    # ajaxHash[:winner] = win_user.username if game.game_over
+    # ajaxHash[:winner] = 'someone one!'
+    ajaxHash[:turn] = game.active_player.user_sym
+    ajaxHash.to_json
+  end
+
+  patch '/ttt/:id' do
+    content_type :json
+    ajaxHash = {}
+    game = Ttt.find(params[:id])
+
+    if game.game_state != params[:game_state]
+      winning_sym = game.make_move
+      game.update(game_state: params[:game_state])
+      game.save!
+    end
+    if game.game_over
+      binding.pry
+      win_game = game.ttt_games.find_by(user_sym: winning_sym)
+      win_user = User.find(win_game.user_id)
+      win_user.ttt_wins += 1
+      win_user.save!
+      # win_game.delete
+      lose_game = game.ttt_games.first
+      loser = User.find(lose_game.user_id)
+      loser.ttt_losses += 1
+      loser.save!
+      # lose_game.delete
+      ajaxHash[:winner] = win_user.username
+      binding.pry
+    end
+
+    ajaxHash[:game_state] = game.game_state
+    ajaxHash[:turn] = game.swap_players
+    ajaxHash.to_json
   end
 
 end

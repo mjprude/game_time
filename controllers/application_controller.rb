@@ -32,7 +32,6 @@ class ApplicationController < Sinatra::Base
     ttt = Ttt.find(params[:id])
     @my_sym = ttt.ttt_games.find_by(user: current_user).user_sym
     @their_sym = @my_sym == "X" ? "O" : "X"
-    @last_play = ttt.updated_at
     erb :tictactoe
   end
 

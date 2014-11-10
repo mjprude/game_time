@@ -27,7 +27,7 @@ function parseServerData(data){
     lat = parseFloat(data.latlng.split(', ')[0]);
     lng = parseFloat(data.latlng.split(', ')[1]);
   }
-  var zoom = 0 + data.fail_count
+  var zoom = 2 + data.fail_count
   var guesses_left = 6 - data.fail_count
   disableButtons(data.bad_guesses, true)
   disableButtons(data.game_state, false)
@@ -36,7 +36,6 @@ function parseServerData(data){
   if (guesses_left < 3) {
     $('#guesses_left').css("color", "red")
   }
-  
   $('#game_state').empty().append(data.game_state)
   console.log("game state:", data.game_state);
   console.log('bad guesses:', data.bad_guesses);
@@ -91,7 +90,7 @@ function newMap(zoom, lat, lng) {
 function endMap(lat, lng) {
   debugger;
   var mapOptions = {
-      zoom: 7,
+      zoom: 8,
       center: new google.maps.LatLng(lat, lng),
       mapTypeId: google.maps.MapTypeId.HYBRID,
     };

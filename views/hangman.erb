@@ -1,19 +1,18 @@
+<div id="game_state"></div>
+
 <div class="stats">
   <h3>Current User: <%= current_user.username %></h3>
   <h3>Wins: <%= current_user.hangman_wins %></h3>
   <h3>Lossess: <%= current_user.hangman_losses %></h3>
 </div>
 <div class="guesses_left">
-  <h3>Guesses Left:</h3>
   <div id="guesses_left"></div>
+  <h3>...guesses left</h3>
 </div>
 <div id="end_game">
-  <h3>Guess a Capital and Country!</h3>
 </div>
 <div id="map-canvas" class="man">
 </div>
-
-<div id="game_state"></div>
 
 <div class="letters">
   <%= letterbank %>
