@@ -16,41 +16,41 @@ ActiveRecord::Schema.define(version: 20141109221146) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "hangmen", force: true do |t|
-    t.string   "word"
-    t.string   "latlng"
-    t.string   "game_state"
-    t.string   "bad_guesses", default: ""
+  create_table "hangmen", force: :cascade do |t|
+    t.string   "word",        limit: 255
+    t.string   "latlng",      limit: 255
+    t.string   "game_state",  limit: 255
+    t.string   "bad_guesses", limit: 255, default: ""
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ttt_games", force: true do |t|
+  create_table "ttt_games", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "user_sym"
+    t.string   "user_sym",   limit: 255
     t.integer  "ttt_id"
-    t.boolean  "turn",       default: false
+    t.boolean  "turn",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "ttts", force: true do |t|
-    t.boolean  "game_over",  default: false
-    t.string   "game_state", default: "         "
+  create_table "ttts", force: :cascade do |t|
+    t.boolean  "game_over",              default: false
+    t.string   "game_state", limit: 255, default: "         "
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "username",                   null: false
-    t.string   "password_hash"
-    t.string   "avatar"
-    t.string   "age"
-    t.integer  "hangman_wins",   default: 0
-    t.integer  "hangman_losses", default: 0
-    t.integer  "ttt_wins",       default: 0
-    t.integer  "ttt_losses",     default: 0
+  create_table "users", force: :cascade do |t|
+    t.string   "username",       limit: 255,             null: false
+    t.string   "password_hash",  limit: 255
+    t.string   "avatar",         limit: 255
+    t.string   "age",            limit: 255
+    t.integer  "hangman_wins",               default: 0
+    t.integer  "hangman_losses",             default: 0
+    t.integer  "ttt_wins",                   default: 0
+    t.integer  "ttt_losses",                 default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
