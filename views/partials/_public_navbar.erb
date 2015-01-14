@@ -6,16 +6,11 @@
   <form action="/login" class="navbar">
     <input type="submit" value="login">
   </form>
-
-  <form action="/console" class="navbar">
-    <input type="submit" value="debug">
-  </form>
   
-  <form class="navbar" action="/sessions" method="post">
-    <input type="hidden" name="username" value="mjprude">
+  <form class="navbar" action="/users" method="post">
+    <input type="hidden" name="user[username]" value=<%= "guest#{Time.now.to_i.to_s[-6..-1]}" %>> 
     <input type="hidden" name="password" value="a">
-    <input type="submit" value="dev login">
+    <input type="submit" value="play as guest">
   </form>
-
 
 </div>

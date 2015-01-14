@@ -12,7 +12,8 @@ class UsersController < ApplicationController
     user = User.new(params[:user])
     user.password = params[:password]
     user.save!
-    redirect "/login"
+    session[:current_user] = user.id
+    redirect "/hangman"
   end
 
   get '/:id/edit' do
