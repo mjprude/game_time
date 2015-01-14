@@ -1,6 +1,8 @@
 class ApplicationController < Sinatra::Base
 
-  require '../helpers/authentication_helper'
+  require './helpers/authentication_helper'
+  require './helpers/link_helper'
+  require './helpers/letter_helper'
 
   helpers Sinatra::AuthenticationHelper
   helpers Sinatra::LinkHelper
