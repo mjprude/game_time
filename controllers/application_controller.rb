@@ -1,4 +1,8 @@
 class ApplicationController < Sinatra::Base
+  Dir.glob('../{helpers}/*.rb').each do |file|
+    require file
+  end
+
   helpers Sinatra::AuthenticationHelper
   helpers Sinatra::LinkHelper
   helpers Sinatra::LetterHelper
