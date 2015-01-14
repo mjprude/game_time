@@ -4,7 +4,7 @@ class ApplicationController < Sinatra::Base
   helpers Sinatra::LetterHelper
 
   before do
-    @connection = ActiveRecord::Base.establish_connection({adapter: 'postgresql', database: 'games_db'})
+    @connection = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || {adapter: 'postgresql', database: 'games_db'})
   end
   after do
     @connection.disconnect!
